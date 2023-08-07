@@ -11,7 +11,7 @@ var router = express.Router();
 /* Todo Silme Islemi Burada Yapilacak. */
 
 router.get('/', function (req,res,next) {
-  res.send('todos api request');
+  res.send('from-middleware' + res.locals.key);
 })
 
 router.post("/", function(req, res, next){

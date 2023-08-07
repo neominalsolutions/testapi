@@ -24,6 +24,24 @@ app.use(express.static(path.join(__dirname, 'public'))); // www root klasörüm�
 
 app.use(cors());
 
+
+app.use(function (req, res, next) {
+  req.user = {name:'ali'}
+  console.log('middleware');
+  // res.locals ile middleware içerisibe gönderilen bir değer başka middlewarelerdan erişilebilir oluyor.
+  res.locals.key = '2323';
+  next();
+
+  // if(req.method == "GET"){
+  //   res.send('GET Request')
+  // } else {
+  //   next();
+  // }
+
+  
+});
+
+
 app.use('/', indexRouter); // gelen istekler yönlendirme yapmış
 app.use('/api/users', usersRouter);
 app.use('/api/todos', todosRouter);
@@ -31,10 +49,14 @@ app.use('/api/todos', todosRouter);
 db();
 
 
+
+
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
 });
+
 
 // error handler
 app.use(function(err, req, res, next) {
